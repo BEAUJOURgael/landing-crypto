@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nebula NFT – Collection Web3</title>
+
+  <style>
+    :root {
+      --bg: #030712;
+      --bg-soft: #020617;
+      --panel: #020617;
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --accent: #f97316;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827, #020617);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+    header {
+      border-bottom: 1px solid rgba(15, 23, 42, 0.6);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      font-size: 0.95rem;
+    }
+
+    .nav-menu a {
+      color: var(--muted);
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .burger {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px 50px;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 3vw + 1rem, 3.1rem);
+      margin-bottom: 10px;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-tags span {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 4px 10px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 22px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #020617;
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-card {
+      background: rgba(15, 23, 42, 0.95);
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 28px 60px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .nft-tile {
+      height: 80px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, #22d3ee, #a855f7);
+      opacity: 0.85;
+    }
+
+    .nft-tile:nth-child(2) {
+      background: radial-gradient(circle at top left, #f97316, #ef4444);
+    }
+
+    .nft-tile:nth-child(3) {
+      background: radial-gradient(circle at top left, #22c55e, #0ea5e9);
+    }
+
+    /* GENERIC SECTION */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .section h2 {
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .step-card {
+      background: var(--panel);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .step-num {
+      font-size: 0.8rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 6px;
+    }
+
+    /* COLLECTION GRID */
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .collection-card {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .collection-image {
+      border-radius: 12px;
+      height: 110px;
+      background: radial-gradient(circle at top left, #6366f1, #ec4899);
+      margin-bottom: 8px;
+    }
+
+    .collection-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+    }
+
+    .collection-info strong {
+      color: var(--text);
+    }
+
+    /* STATS */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat span {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .stat small {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ROADMAP */
+    .roadmap {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid rgba(148, 163, 184, 0.5);
+      margin-top: 10px;
+    }
+
+    .roadmap-item {
+      margin-bottom: 20px;
+      position: relative;
+      padding-left: 12px;
+    }
+
+    .roadmap-item::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, var(--primary), var(--secondary));
+    }
+
+    .roadmap-item h3 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* FAQ */
+    .faq-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      align-items: flex-start;
+    }
+
+    .faq {
+      background: var(--panel);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-header {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+      padding: 0 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .faq-body.open {
+      padding: 0 16px 14px;
+    }
+
+    .faq-body-inner {
+      padding-top: 10px;
+    }
+
+    .faq-side {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 18px;
+      border-left: 1px solid var(--border);
+    }
+
+    /* CTA FINAL */
+    .cta {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 28px 22px;
+      border-radius: 22px;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px 10px 30px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .steps,
+      .collection-grid,
+      .stats-bar {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .faq-side {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        right: 20px;
+        top: 60px;
+        flex-direction: column;
+        gap: 10px;
+        background: var(--bg-soft);
+        border-radius: 14px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+      }
+
+      .nav-menu.open {
+        display: flex;
+      }
+
+      .nav {
+        position: relative;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+    }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.querySelector(".nav-menu");
+      menu.classList.toggle("open");
+    }
+
+    // Smooth scroll
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const id = link.getAttribute("href").slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({
+        top: target.offsetTop - 70,
+        behavior: "smooth",
+      });
+    });
+
+    // FAQ
+    document.addEventListener("click", (e) => {
+      const header = e.target.closest(".faq-header");
+      if (!header) return;
+      const item = header.parentElement;
+      const body = item.querySelector(".faq-body");
+
+      const allBodies = document.querySelectorAll(".faq-body");
+      allBodies.forEach((b) => {
+        if (b !== body) {
+          b.style.maxHeight = "0px";
+          b.classList.remove("open");
+        }
+      });
+
+      if (body.classList.contains("open")) {
+        body.style.maxHeight = "0px";
+        body.classList.remove("open");
+      } else {
+        body.classList.add("open");
+        body.style.maxHeight = body.scrollHeight + "px";
+      }
+    });
+  </script>
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav">
+      <div class="logo">Nebula NFT</div>
+      <ul class="nav-menu">
+        <li><a href="#how">Comment ça marche</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <button class="nav-cta">Connect Wallet</button>
+      <button class="burger" onclick="toggleMenu()">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <h1 class="hero-title">Une collection NFT inspirée des nébuleuses.</h1>
+        <p class="hero-sub">
+          5 000 NFT uniques, générés par IA, donnant accès à une communauté privée, des events IRL
+          et des drops exclusifs.
+        </p>
+        <div class="hero-tags">
+          <span>5000 NFT</span>
+          <span>Ethereum</span>
+          <span>Utilities & events</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#mint" class="btn btn-primary">Mint maintenant</a>
+          <a href="#collection" class="btn btn-secondary">Voir la collection</a>
+        </div>
+        <div class="hero-meta">
+          <span>Supply limitée</span>
+          <span>Smart contract vérifié</span>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>Mint public bientôt</h3>
+        <p>Whitelist ouverte pour les premiers supporters du projet.</p>
+        <div class="hero-card-grid">
+          <div class="nft-tile"></div>
+          <div class="nft-tile"></div>
+          <div class="nft-tile"></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <h2>Comment ça marche ?</h2>
+      <p class="section-sub">3 étapes pour rejoindre la Nebula.</p>
+      <div class="steps">
+        <article class="step-card">
+          <div class="step-num">Étape 1</div>
+          <h3>Connecter son wallet</h3>
+          <p>Utilisez Metamask ou tout autre wallet compatible pour vous connecter.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-num">Étape 2</div>
+          <h3>Choisir le nombre de NFT</h3>
+          <p>Définissez la quantité (limite par wallet) et confirmez la transaction.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-num">Étape 3</div>
+          <h3>Rejoindre la communauté</h3>
+          <p>Accédez au Discord privé, aux events et aux futures collections.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section id="collection" class="section">
+      <h2>Un aperçu de la collection</h2>
+      <p class="section-sub">Chaque NFT est unique, généré à partir de dizaines de traits visuels.</p>
+
+      <div class="collection-grid">
+        <article class="collection-card">
+          <div class="collection-image"></div>
+          <div class="collection-info">
+            <div>
+              <strong>Nebula #023</strong>
+              <div>Galaxy tier</div>
+            </div>
+            <div>0.08Ξ</div>
+          </div>
+        </article>
+        <article class="collection-card">
+          <div class="collection-image"></div>
+          <div class="collection-info">
+            <div>
+              <strong>Nebula #147</strong>
+              <div>Supernova tier</div>
+            </div>
+            <div>0.12Ξ</div>
+          </div>
+        </article>
+        <article class="collection-card">
+          <div class="collection-image"></div>
+          <div class="collection-info">
+            <div>
+              <strong>Nebula #311</strong>
+              <div>Cosmic tier</div>
+            </div>
+            <div>0.09Ξ</div>
+          </div>
+        </article>
+        <article class="collection-card">
+          <div class="collection-image"></div>
+          <div class="collection-info">
+            <div>
+              <strong>Nebula #999</strong>
+              <div>Legendary tier</div>
+            </div>
+            <div>0.3Ξ</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- STATS + ROADMAP -->
+    <section id="roadmap" class="section">
+      <h2>Stats & Roadmap</h2>
+      <p class="section-sub">Suivez la progression du projet et ce qui arrive ensuite.</p>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span>5K</span>
+          <small>Supply totale</small>
+        </div>
+        <div class="stat">
+          <span>3.2K</span>
+          <small>Mintés</small>
+        </div>
+        <div class="stat">
+          <span>1.1K</span>
+          <small>Détenteurs uniques</small>
+        </div>
+        <div class="stat">
+          <span>0.08Ξ</span>
+          <small>Floor price</small>
+        </div>
+      </div>
+
+      <div class="roadmap" style="margin-top:32px;">
+        <div class="roadmap-item">
+          <h3>Phase 1 – Mint & communauté</h3>
+          <p>Ouverture de la whitelist, mint public et lancement du Discord.</p>
+        </div>
+        <div class="roadmap-item">
+          <h3>Phase 2 – Utilities & events</h3>
+          <p>Accès à des channels privés, séances AMA, events IRL, airdrops.</p>
+        </div>
+        <div class="roadmap-item">
+          <h3>Phase 3 – Métaverse</h3>
+          <p>Intégration dans des expériences 3D et partenariats avec des projets Web3.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <h2>FAQ</h2>
+      <p class="section-sub">Quelques réponses rapides avant de minter.</p>
+
+      <div class="faq-grid">
+        <div class="faq">
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>C’est quoi un NFT ?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                Un NFT est un jeton unique inscrit sur la blockchain, généralement utilisé pour représenter une œuvre, un objet ou un accès.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Quels wallets sont compatibles ?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                Metamask, Rainbow, et la plupart des wallets compatibles Ethereum sont supportés.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Y a-t-il des frais de gas ?</span>
+              <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                Oui, les transactions sur Ethereum impliquent des frais de gas. Nous optimisons le contrat pour les limiter autant que possible.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="faq-side">
+          <p>
+            Ce projet est un exemple de Landing Page pour une collection NFT.
+            Tu peux adapter le texte, les images et les liens pour ton propre projet.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="mint" class="section">
+      <div class="cta">
+        <h2>Prêt à rejoindre la Nebula ?</h2>
+        <p>Mint limité. Une fois sold out, il n’y aura pas de re-mint.</p>
+        <a href="#!" class="btn btn-primary">Mint maintenant</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Nebula NFT – Exemple de landing page crypto/NFT.
+  </footer>
+</body>
+</html>
